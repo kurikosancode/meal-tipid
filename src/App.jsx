@@ -2,9 +2,12 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import DayCard from './components/DayCard'
 
+const DEFAULT_BUDGET = 5000;
+
+
 function App() {
-  const [currentStep, setCurrentStep] = useState(1)
-  const [budget, setBudget] = useState('')
+  const [currentStep, setCurrentStep] = useState(String(DEFAULT_BUDGET))
+  const [budget, setBudget] = useState(DEFAULT_BUDGET)
   const [preferences, setPreferences] = useState({
     vegan: false,
     vegetarian: false,
@@ -248,7 +251,7 @@ function App() {
                   Preferences: {Object.entries(preferences)
                     .filter(([key, value]) => value && key !== 'noRestrictions')
                     .map(([key]) => key.charAt(0).toUpperCase() + key.slice(1))
-                    .join(', ') || 'No restrictions'}
+                    .join(', ') || 'None'}
                 </span>
                 <span>Daily Goal: {goals.calories} cal</span>
               </div>

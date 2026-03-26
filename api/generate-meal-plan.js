@@ -28,7 +28,9 @@ export default async function handler(req, res) {
     - The total cost of the meals for the day should not exceed the daily budget (total budget divided by 7).
     - The total calories for the day should be around 2000 calories.
     - The calorie and price of the meals should add to the calories and price of the day respectively.
-    - In the ingredients, only state the main components of the meal. For example, if the meal is "Tapsilog", the ingredient should be "Tapa, Rice, Egg". Do not include minor ingredients like "oil" or "salt".
+    - In the components, only state the main components of the meal. For example, if the meal is "Tapsilog", the ingredient should be "Tapa, Rice, Egg". Do not include minor ingredients like "oil" or "salt".
+    - If it's just ulam with rice, only state that, don't state the ingredients of the ulam.
+    - Also state the serving size of the components. For example, "Tapa - 150g".
 
     Schema:
     [
@@ -40,7 +42,7 @@ export default async function handler(req, res) {
             "name": "string",
             "price": number,
             "calories": number,
-            "ingredients": "string"
+            "components": "string"
           }
         ]
         "totalPrice": number,

@@ -20,39 +20,39 @@ export default defineConfig({
             // Mock response for local development
             const mockPlan = [
               { day: 'Monday', meals: [
-                { type: 'Breakfast', name: 'Tapsilog', price: 85, calories: 450, ingredients: 'Tapa - 150g\nRice - 250g\nEgg - 1pc\npotato - 1pc' },
-                { type: 'Lunch', name: 'Tinola', price: 120, calories: 320, ingredients: 'Rice - 250g\nTinola - 250g' },
-                { type: 'Dinner', name: 'Sinigang na Baboy', price: 150, calories: 380, ingredients: 'Rice - 250g\nSinigang - 350g' }
+                { type: 'Breakfast', name: 'Tapsilog', price: 85, calories: 450, components: 'Tapa - 150g\nRice - 250g\nEgg - 1pc\npotato - 1pc' },
+                { type: 'Lunch', name: 'Tinola', price: 120, calories: 320, components: 'Rice - 250g\nTinola - 250g' },
+                { type: 'Dinner', name: 'Sinigang na Baboy', price: 150, calories: 380, components: 'Rice - 250g\nSinigang - 350g' }
               ]},
               { day: 'Tuesday', meals: [
-                { type: 'Breakfast', name: 'Longsilog', price: 90, calories: 480, ingredients: 'Longanisa - 120g\nRice - 250g\nEgg - 1pc' },
-                { type: 'Lunch', name: 'Adobong Manok', price: 115, calories: 350, ingredients: 'Rice - 250g\nAdobong Manok - 300g' },
-                { type: 'Dinner', name: 'Kare-Kare', price: 160, calories: 400, ingredients: 'Rice - 250g\nKare-Kare - 350g' }
+                { type: 'Breakfast', name: 'Longsilog', price: 90, calories: 480, components: 'Longanisa - 120g\nRice - 250g\nEgg - 1pc' },
+                { type: 'Lunch', name: 'Adobong Manok', price: 115, calories: 350, components: 'Rice - 250g\nAdobong Manok - 300g' },
+                { type: 'Dinner', name: 'Kare-Kare', price: 160, calories: 400, components: 'Rice - 250g\nKare-Kare - 350g' }
               ]},
               { day: 'Wednesday', meals: [
-                { type: 'Breakfast', name: 'Bangsilog', price: 80, calories: 420, ingredients: 'Bangus - 150g\nRice - 250g\nEgg - 1pc' },
-                { type: 'Lunch', name: 'Lumpia', price: 110, calories: 380, ingredients: 'Rice - 250g\nLumpia - 200g' },
-                { type: 'Dinner', name: 'Pinakbet', price: 140, calories: 360, ingredients: 'Rice - 250g\nPinakbet - 300g' }
+                { type: 'Breakfast', name: 'Bangsilog', price: 80, calories: 420, components: 'Bangus - 150g\nRice - 250g\nEgg - 1pc' },
+                { type: 'Lunch', name: 'Lumpia', price: 110, calories: 380, components: 'Rice - 250g\nLumpia - 200g' },
+                { type: 'Dinner', name: 'Pinakbet', price: 140, calories: 360, components: 'Rice - 250g\nPinakbet - 300g' }
               ]},
               { day: 'Thursday', meals: [
-                { type: 'Breakfast', name: 'Tocino Sandwich', price: 75, calories: 390, ingredients: 'Tocino - 100g\nBread - 2 slices\nCheese - 30g' },
-                { type: 'Lunch', name: 'Fried Tilapia', price: 125, calories: 340, ingredients: 'Rice - 250g\nTilapia - 250g' },
-                { type: 'Dinner', name: 'Bulalo', price: 165, calories: 420, ingredients: 'Rice - 250g\nBulalo - 400g' }
+                { type: 'Breakfast', name: 'Tocino Sandwich', price: 75, calories: 390, components: 'Tocino - 100g\nBread - 2 slices\nCheese - 30g' },
+                { type: 'Lunch', name: 'Fried Tilapia', price: 125, calories: 340, components: 'Rice - 250g\nTilapia - 250g' },
+                { type: 'Dinner', name: 'Bulalo', price: 165, calories: 420, components: 'Rice - 250g\nBulalo - 400g' }
               ]},
               { day: 'Friday', meals: [
-                { type: 'Breakfast', name: 'Hotsilog', price: 95, calories: 470, ingredients: 'Hotdog - 100g\nRice - 250g\nEgg - 1pc' },
-                { type: 'Lunch', name: 'Lapu-Lapu Fillet', price: 130, calories: 360, ingredients: 'Rice - 250g\nLapu-Lapu - 300g' },
-                { type: 'Dinner', name: 'Nilaga', price: 155, calories: 390, ingredients: 'Rice - 250g\nNilaga - 350g' }
+                { type: 'Breakfast', name: 'Hotsilog', price: 95, calories: 470, components: 'Hotdog - 100g\nRice - 250g\nEgg - 1pc' },
+                { type: 'Lunch', name: 'Lapu-Lapu Fillet', price: 130, calories: 360, components: 'Rice - 250g\nLapu-Lapu - 300g' },
+                { type: 'Dinner', name: 'Nilaga', price: 155, calories: 390, components: 'Rice - 250g\nNilaga - 350g' }
               ]},
               { day: 'Saturday', meals: [
-                { type: 'Breakfast', name: 'Corned Beef Tapa', price: 88, calories: 460, ingredients: 'Corned Beef - 120g\nRice - 250g\nEgg - 1pc' },
-                { type: 'Lunch', name: 'Chicken Caldereta', price: 135, calories: 380, ingredients: 'Rice - 250g\nCaldereta - 350g' },
-                { type: 'Dinner', name: 'Lumpiang Shanghai', price: 120, calories: 410, ingredients: 'Rice - 250g\nLumpia Shanghai - 250g' }
+                { type: 'Breakfast', name: 'Corned Beef Tapa', price: 88, calories: 460, components: 'Corned Beef - 120g\nRice - 250g\nEgg - 1pc' },
+                { type: 'Lunch', name: 'Chicken Caldereta', price: 135, calories: 380, components: 'Rice - 250g\nCaldereta - 350g' },
+                { type: 'Dinner', name: 'Lumpiang Shanghai', price: 120, calories: 410, components: 'Rice - 250g\nLumpia Shanghai - 250g' }
               ]},
               { day: 'Sunday', meals: [
-                { type: 'Breakfast', name: 'Pandesal with Cheese', price: 50, calories: 280, ingredients: 'Pandesal - 2pcs\nCheese - 50g' },
-                { type: 'Lunch', name: 'Lechon Kawali', price: 140, calories: 450, ingredients: 'Rice - 250g\nLechon Kawali - 400g' },
-                { type: 'Dinner', name: 'Arroz Caldo', price: 95, calories: 340, ingredients: 'Arroz Caldo - 400g' }
+                { type: 'Breakfast', name: 'Pandesal with Cheese', price: 50, calories: 280, components: 'Pandesal - 2pcs\nCheese - 50g' },
+                { type: 'Lunch', name: 'Lechon Kawali', price: 140, calories: 450, components: 'Rice - 250g\nLechon Kawali - 400g' },
+                { type: 'Dinner', name: 'Arroz Caldo', price: 95, calories: 340, components: 'Arroz Caldo - 400g' }
               ]}
             ]
             
