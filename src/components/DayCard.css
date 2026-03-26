@@ -44,6 +44,7 @@
 }
 
 .ingredients {
+  white-space: pre-line;
   font-size: 0.75rem;
   color: var(--text-secondary);
   margin: 0.25rem 0 0.5rem 0;
