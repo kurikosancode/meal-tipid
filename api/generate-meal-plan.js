@@ -31,6 +31,7 @@ export default async function handler(req, res) {
     - In the components, only state the main components of the meal. For example, if the meal is "Tapsilog", the ingredient should be "Tapa, Rice, Egg". Do not include minor ingredients like "oil" or "salt".
     - If it's just ulam with rice, only state that, don't state the ingredients of the ulam.
     - Also state the serving size of the components. For example, "Tapa - 150g".
+    - With the name of the meal, make it short and concise. For example, instead of "Tapsilog with Egg and Rice", just state "Tapsilog".
 
     Schema:
     [
