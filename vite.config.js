@@ -20,7 +20,7 @@ export default defineConfig({
             // Mock response for local development
             const mockPlan = [
               { day: 'Monday', meals: [
-                { type: 'Breakfast', name: 'Tapsilog', price: 85, calories: 450, ingredients: 'Tapa - 150g\nRice - 250g\nEgg - 1pc' },
+                { type: 'Breakfast', name: 'Tapsilog', price: 85, calories: 450, ingredients: 'Tapa - 150g\nRice - 250g\nEgg - 1pc\npotato - 1pc' },
                 { type: 'Lunch', name: 'Tinola', price: 120, calories: 320, ingredients: 'Rice - 250g\nTinola - 250g' },
                 { type: 'Dinner', name: 'Sinigang na Baboy', price: 150, calories: 380, ingredients: 'Rice - 250g\nSinigang - 350g' }
               ]},
