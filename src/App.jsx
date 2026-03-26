@@ -6,8 +6,8 @@ const DEFAULT_BUDGET = 5000;
 
 
 function App() {
-  const [currentStep, setCurrentStep] = useState(String(DEFAULT_BUDGET))
-  const [budget, setBudget] = useState(DEFAULT_BUDGET)
+  const [currentStep, setCurrentStep] = useState(1)
+  const [budget, setBudget] = useState(String(DEFAULT_BUDGET))
   const [preferences, setPreferences] = useState({
     vegan: false,
     vegetarian: false,
@@ -91,7 +91,6 @@ function App() {
       document.documentElement.removeAttribute('data-theme')
     }
   }
-
   return (
     <div className="app">
       <header className="header">
@@ -242,6 +241,7 @@ function App() {
             </div>
           </div>
         ) : (
+
           <div className="meal-plan">
             <div className="plan-header">
               <h2>Your Weekly Meal Plan</h2>
