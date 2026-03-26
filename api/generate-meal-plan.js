@@ -1,5 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+const AI_MODEL  = "gemini-pro";
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -8,7 +10,7 @@ export default async function handler(req, res) {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     
     // 1. Ensure model name is correct (1.5-flash is the stable JSON-capable model)
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ model: AI_MODEL });
 
     const prompt = `
     You are a JSON generator.
@@ -20,12 +22,12 @@ export default async function handler(req, res) {
 
     Constraints:
     - Budget: ₱${budget}
-    - People: ${people}
     - Goal: ${goals}
 
     Rules:
     - The ingredients should be the just the main component of the food. 
       For example, if the meal is "Tapsilog", the ingredient should be "Tapa, Rice, Egg".
+    - The total s
 
     Schema:
     [
@@ -42,6 +44,14 @@ export default async function handler(req, res) {
         ]
       }
     ]
+
+    Example Output:
+    [
+              { day: 'Monday', meals: [
+                { type: 'Breakfast', name: 'Tapsilog', price: 85, calories: 450, ingredients: 'Tapa - 150g\nRice - 250g\nEgg - 1pc' },
+                { type: 'Lunch', name: 'Tinola', price: 120, calories: 320, ingredients: 'Rice - 250g\nTinola - 250g' },
+                { type: 'Dinner', name: 'Sinigang na Baboy', price: 150, calories: 380, ingredients: 'Rice - 250g\nSinigang - 350g' }
+  ]}]
     `;
 
     // 2. Pass the config directly into the generateContent call
