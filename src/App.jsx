@@ -260,9 +260,7 @@ function App() {
                   <DayCard
                     key={dayPlan.day || dayPlan.day}
                     day={dayPlan.day}
-                    dailyBudget={Math.floor(budget / 7)}
                     meals={dayPlan.meals}
-                    calorieGoal={goals.calories}
                   />
                 ))
               ) : (

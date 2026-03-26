@@ -27,7 +27,9 @@ export default async function handler(req, res) {
     Rules:
     - The ingredients should be the just the main component of the food. 
       For example, if the meal is "Tapsilog", the ingredient should be "Tapa, Rice, Egg".
-    - The total s
+    - The total cost of the meals for the day should not exceed the daily budget (total budget divided by 7).
+    - The total calories for the day should be around 2000 calories.
+    - The calorie and price of the meals should add to the calories and price of the day respectively.
 
     Schema:
     [
@@ -42,6 +44,8 @@ export default async function handler(req, res) {
             "ingredients": "string"
           }
         ]
+        "totalPrice": number,
+        "totalCalories": number
       }
     ]
 
