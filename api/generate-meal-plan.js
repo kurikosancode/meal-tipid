@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     
     // 1. Ensure model name is correct (1.5-flash is the stable JSON-capable model)
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const prompt = `Return a JSON array of 7 days of Filipino meals for ₱${budget}. 
     Follow this schema: [{"day": "Monday", "meals": [{"type": "Breakfast", "name": "string", "price": 0, "calories": 0, "ingredients": "string"}]}]
@@ -18,11 +18,12 @@ export default async function handler(req, res) {
     const result = await model.generateContent({
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
       generationConfig: {
-        responseMimeType: "application/json",
-      },
+      response_mime_type: "application/json"
+      }
     });
 
     const text = result.response.text();
+    console.log(text);
     
     // 3. Safety trim (still a good practice)
     const cleanJson = text.replace(/```json/g, "").replace(/```/g, "").trim();
