@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const AI_MODEL  = "gemini-pro";
+const AI_MODEL  = "gemini-2.5-pro"; // Updated to the correct model name
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
