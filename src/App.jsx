@@ -31,11 +31,10 @@ function App() {
   const isPlanView = Boolean(mealPlan) || (currentStepId === lastInputStepId && loading)
 
   const handleNextWithGeneration = async () => {
-    if (currentStepId === lastInputStepId) {
+    const movedToNextStep = handleNext()
+    if (!movedToNextStep && currentStepId === lastInputStepId) {
       await generateMealPlan(budget, preferences, preferredFoods, goals)
-      return
     }
-    handleNext()
   }
 
   const handleStartOver = () => {

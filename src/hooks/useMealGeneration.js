@@ -30,14 +30,21 @@ export function useMealGeneration() {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to generate meal plan')
+        let details = 'Unknown server error'
+        try {
+          const errorBody = await response.json()
+          details = errorBody?.details || errorBody?.error || details
+        } catch {
+          details = `HTTP ${response.status}`
+        }
+        throw new Error(details)
       }
 
       const meals = await response.json()
       setMealPlan(meals)
     } catch (err) {
       console.error('Error:', err)
-      setError('Failed to generate meal plan. Using sample meals.')
+      setError(`AI generation failed (${err.message}). Using sample meals.`)
       setMealPlan(DAYS.map((day) => ({ day, meals: SAMPLE_MEALS })))
     } finally {
       setLoading(false)

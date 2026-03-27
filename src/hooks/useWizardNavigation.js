@@ -14,7 +14,10 @@ export function useWizardNavigation() {
   const handleNext = () => {
     if (currentStepIndex >= 0 && currentStepIndex < WIZARD_STEPS.length - 1) {
       setCurrentStepId(WIZARD_STEPS[currentStepIndex + 1].id)
+      return true
     }
+
+    return false
   }
 
   const handleBack = () => {
