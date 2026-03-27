@@ -1,0 +1,132 @@
+.preferred-foods-search-wrap {
+  position: relative;
+  margin-top: 1rem;
+}
+
+.preferred-foods-search-row {
+  position: relative;
+}
+
+.preferred-foods-search-row input {
+  position: relative;
+  z-index: 1;
+  padding-left: 2.75rem;
+}
+
+.preferred-foods-search-row input:focus {
+  transform: none;
+}
+
+.preferred-foods-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.9rem;
+  transform: translateY(-50%);
+  z-index: 2;
+  color: var(--text-secondary);
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  pointer-events: none;
+}
+
+.preferred-foods-search-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.preferred-foods-dropdown {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  max-height: 260px;
+  overflow-y: auto;
+  box-shadow: var(--shadow-light);
+  text-align: left;
+}
+
+.preferred-food-option {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--border-light);
+  background: transparent;
+  color: var(--text);
+  padding: 0.8rem 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.preferred-food-option:last-child {
+  border-bottom: none;
+}
+
+.preferred-food-option:hover {
+  background: var(--bg-secondary);
+}
+
+.preferred-food-option strong {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.preferred-food-option.selected {
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.preferred-food-option.selected strong {
+  color: var(--primary);
+}
+
+.preferred-food-empty {
+  padding: 0.9rem;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+
+.preferred-foods-selected {
+  margin-top: 2.5rem;
+}
+
+.selected-food-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.selected-food-item {
+  border: 1px solid var(--primary);
+  background: rgba(34, 197, 94, 0.12);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+}
+
+.selected-food-item span {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.preferred-foods-error {
+  color: #e53e3e;
+}
+
+@media (max-width: 768px) {
+  .preferred-foods-search-row {
+    width: 100%;
+  }
+}

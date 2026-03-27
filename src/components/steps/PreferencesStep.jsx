@@ -1,3 +1,5 @@
+import './PreferencesStep.css'
+
 function PreferencesStep({ preferences, setPreferences }) {
     return (
         <div className="step-content">

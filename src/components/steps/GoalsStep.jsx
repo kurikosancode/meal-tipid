@@ -1,3 +1,5 @@
+import './GoalsStep.css'
+
 function GoalsStep({ goals, setGoals }) {
     return (
         <div className="step-content">
