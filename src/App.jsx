@@ -28,7 +28,7 @@ function App() {
   const { mealPlan, loading, error, generateMealPlan, resetMealPlan } = useMealGeneration()
   const { darkMode, handleToggleDarkMode } = useDarkMode()
 
-  const isPlanView = Boolean(mealPlan) || (currentStepId === lastInputStepId && loading)
+  const isPlanView = Boolean(mealPlan)
 
   const handleNextWithGeneration = async () => {
     const movedToNextStep = handleNext()
