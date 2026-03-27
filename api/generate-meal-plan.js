@@ -6,7 +6,16 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const { budget, people, goals } = req.body;
+    const { budget, preferences = {}, preferredFoods = [], goals } = req.body;
+    const selectedPreferences = Object.entries(preferences)
+      .filter(([key, value]) => value && key !== 'noRestrictions')
+      .map(([key]) => key);
+    const dietaryLine = selectedPreferences.length > 0
+      ? selectedPreferences.join(', ')
+      : 'None';
+    const preferredFoodsLine = Array.isArray(preferredFoods) && preferredFoods.length > 0
+      ? preferredFoods.join(', ')
+      : 'None';
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     
     // 1. Ensure model name is correct (1.5-flash is the stable JSON-capable model)
@@ -22,12 +31,20 @@ export default async function handler(req, res) {
 
     Constraints:
     - Budget: ₱${budget}
-    - Goal: ${goals}
+    - Goal: Calories ${goals?.calories}, Protein ${goals?.protein}g, Carbs ${goals?.carbs}g, Fat ${goals?.fat}g
+    - Dietary preferences: ${dietaryLine}
+    - Preferred foods: ${preferredFoodsLine}
 
     Rules:
     - The total cost of the meals for the day should not exceed the daily budget (total budget divided by 7).
     - The total calories for the day should be around 2000 calories.
     - The calorie and price of the meals should add to the calories and price of the day respectively.
+    - Strictly follow dietary preferences when provided.
+    - Prioritize preferred foods when compatible with dietary preferences and budget.
+    - If preference includes vegan: no meat, fish, eggs, dairy, honey.
+    - If preference includes vegetarian: no meat or fish.
+    - If preference includes halal: only halal-compliant dishes and proteins.
+    - If preference includes pescatarian: fish/seafood allowed, no other meat.
     - In the components, only state the main components of the meal. For example, if the meal is "Tapsilog", the ingredient should be "Tapa, Rice, Egg". Do not include minor ingredients like "oil" or "salt".
     - If it's just ulam with rice, only state that, don't state the ingredients of the ulam.
     - Also state the serving size of the components. For example, "Tapa - 150g".
