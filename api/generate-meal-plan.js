@@ -45,10 +45,13 @@ export default async function handler(req, res) {
     - If preference includes vegetarian: no meat or fish.
     - If preference includes halal: only halal-compliant dishes and proteins.
     - If preference includes pescatarian: fish/seafood allowed, no other meat.
-    - In the components, only state the main components of the meal. For example, if the meal is "Tapsilog", the ingredient should be "Tapa, Rice, Egg". Do not include minor ingredients like "oil" or "salt".
+    - In the components, only state the main components of the meal. For example, if the meal is "Tapsilog", the ingredients should be "Tapa, Rice, Egg". Do not include minor ingredients like "oil" or "salt".
     - If it's just ulam with rice, only state that, don't state the ingredients of the ulam.
     - Also state the serving size of the components and separate them with comma. For example, "Tapa - 150g, Rice - 250g, Egg - 1pc".
     - With the name of the meal, make it short and concise. For example, instead of "Tapsilog with Egg and Rice", just state "Tapsilog".
+    - IMPORTANT: The field name MUST be "components" (not "ingredients"). Example: "components": "Tapa - 150g, Rice - 250g, Egg - 1pc"
+    - For EACH meal, include numeric macros: "protein", "fat", and "carbs" in grams.
+    - IMPORTANT: Macro field names MUST be exactly "protein", "fat", and "carbs".
 
     Schema:
     [
@@ -60,20 +63,20 @@ export default async function handler(req, res) {
             "name": "string",
             "price": number,
             "calories": number,
+            "protein": number,
+            "fat": number,
+            "carbs": number,
             "components": "string"
           }
         ]
-        "totalPrice": number,
-        "totalCalories": number
-      }
     ]
 
     Example Output:
     [
               { day: 'Monday', meals: [
-                { type: 'Breakfast', name: 'Tapsilog', price: 85, calories: 450, ingredients: 'Tapa - 150g, Rice - 250g, Egg - 1pc' },
-                { type: 'Lunch', name: 'Tinola', price: 120, calories: 320, ingredients: 'Rice - 250g, Tinola - 250g' },
-                { type: 'Dinner', name: 'Sinigang na Baboy', price: 150, calories: 380, ingredients: 'Rice - 250g, Sinigang - 350g' }
+                { type: 'Breakfast', name: 'Tapsilog', price: 85, calories: 450, protein: 28, fat: 16, carbs: 48, components: 'Tapa - 150g, Rice - 250g, Egg - 1pc' },
+                { type: 'Lunch', name: 'Tinola', price: 120, calories: 320, protein: 32, fat: 10, carbs: 24, components: 'Rice - 250g, Tinola - 250g' },
+                { type: 'Dinner', name: 'Sinigang na Baboy', price: 150, calories: 380, protein: 26, fat: 14, carbs: 35, components: 'Rice - 250g, Sinigang - 350g' }
   ]}]
     `;
 
@@ -91,7 +94,19 @@ export default async function handler(req, res) {
     const cleanJson = text.replace(/```json/g, "").replace(/```/g, "").trim();
     const mealPlan = JSON.parse(cleanJson);
 
-    res.status(200).json(mealPlan);
+    // 4. Normalize field names: convert "ingredients" to "components" if needed
+    const normalizedPlan = mealPlan.map(day => ({
+      ...day,
+      meals: day.meals.map(meal => ({
+        ...meal,
+        components: meal.components || meal.ingredients || '',
+        protein: Number(meal.protein ?? 0),
+        fat: Number(meal.fat ?? 0),
+        carbs: Number(meal.carbs ?? 0)
+      }))
+    }))
+
+    res.status(200).json(normalizedPlan);
   } catch (error) {
     console.error('Error Details:', error);
     res.status(500).json({ error: 'Generation Failed', details: error.message });

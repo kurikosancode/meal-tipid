@@ -35,19 +35,70 @@
 }
 
 .day-card:hover::before {
-  opacity: 1;
+  opacity: 0;
+}
+
+.day-card.editing {
+  border-color: var(--secondary);
+  box-shadow: var(--shadow);
+  outline: 2px solid var(--secondary-light);
+  outline-offset: 0;
+}
+
+.day-card.editing::before {
+  opacity: 0;
+}
+
+.day-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .day-card h3 {
-  margin: 0 0 0.5rem 0;
+  margin: 0;
   font-size: 1.3rem;
   color: var(--text);
   position: relative;
   font-weight: 700;
 }
 
+.day-card h3::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 35px;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+.btn-edit-day {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  pointer-events: auto;
+}
+
+.btn-edit-day:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.btn-edit-day.active {
+  opacity: 1;
+  color: var(--secondary);
+  transform: scale(1.2);
+}
+
 .components {
-  white-space: pre-line;
   font-size: 0.75rem;
   color: var(--text-secondary);
   margin: 0.25rem 0 0.5rem 0;
@@ -61,17 +112,6 @@
 .components div {
   margin: 0;
   padding: 0;
-}
-
-.day-card h3::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 35px;
-  height: 3px;
-  background: var(--primary);
-  border-radius: 2px;
 }
 
 .day-budget {
@@ -95,12 +135,16 @@
   border-radius: 12px;
   border: 1px solid var(--border-light);
   transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
-.meal:hover {
-  background: var(--bg);
-  border-color: var(--primary-light);
-  transform: translateX(4px);
+.meal.editable-meal {
+  cursor: pointer;
+}
+
+.meal.editable-meal:not(:has(.meal-edit-form)):hover {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(43, 108, 176, 0.1);
 }
 
 .meal h4 {
@@ -125,15 +169,172 @@
   font-weight: 500;
 }
 
+.meal small.meal-macros {
+  display: block;
+  margin-top: 0.55rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--border-light);
+  color: #000000;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.components + small.meal-macros {
+  margin-top: 1rem;
+}
+
+[data-theme="dark"] .meal small.meal-macros {
+  color: #ffffff;
+}
+
 .day-total {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem 1rem;
+  justify-content: stretch;
+  justify-items: stretch;
   font-weight: 600;
   color: var(--text);
-  border-top: 2px solid var(--border-light);
-  padding-top: 1rem;
+  border-top: 1px solid var(--border-light);
   background: var(--bg-accent);
-  padding: 1rem;
-  border-radius: 8px;
-  margin: 0 -1.5rem -1.5rem -1.5rem;
+  padding: 0.9rem 1.5rem;
+  border-radius: 6px;
+  margin: auto -1.5rem -1.5rem -1.5rem;
 }
+
+.macro-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  line-height: 1.15;
+  min-width: 0;
+  width: 100%;
+}
+
+.macro-item:nth-child(2n) {
+  justify-content: flex-end;
+}
+
+.macro-text {
+  display: inline-block;
+  font-size: 0.92rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-align: left;
+}
+
+/* Edit Mode Styles */
+.meal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.meal-price {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--primary);
+  padding: 0;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.day-card.editing .meal {
+  padding: 0.8rem;
+}
+
+.btn-save {
+  padding: 0.7rem 1.5rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.btn-save:hover {
+  background: var(--primary-light);
+  transform: translateY(-2px);
+}
+
+.meal-edit-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.meal-type-label {
+  grid-column: 1 / -1;
+  margin: 0 0 0.1rem 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.35px;
+}
+
+.edit-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+  box-sizing: border-box;
+}
+
+.edit-group.full-row {
+  grid-column: 1 / -1;
+}
+
+.macro-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+
+.edit-group label {
+  font-size: 0.64rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.edit-group input,
+.edit-group textarea {
+  padding: 0.3rem 0.38rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-size: 0.8rem;
+  color: var(--text);
+  background: var(--bg);
+  font-family: inherit;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.edit-group textarea {
+  resize: none;
+  line-height: 1.2;
+}
+
+.edit-group input:focus,
+.edit-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px rgba(43, 108, 176, 0.14);
+}
+
+[data-theme="dark"] .meal-edit-form input[type="number"] {
+  color-scheme: dark;
+}
+

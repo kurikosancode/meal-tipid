@@ -73,6 +73,13 @@
   text-align: center;
   transition: all 0.3s ease;
   background: var(--bg);
+  color: var(--text);
+  caret-color: var(--text);
+}
+
+.step-content input::placeholder {
+  color: var(--text-light);
+  opacity: 1;
 }
 
 .step-content input:focus {

@@ -1,4 +1,5 @@
 import './App.css'
+import { useState, useEffect } from 'react'
 import DayCard from './components/DayCard'
 import { WIZARD_STEPS } from './config/wizardSteps'
 import { useWizardForm } from './hooks/useWizardForm'
@@ -8,9 +9,36 @@ import { useDarkMode } from './hooks/useDarkMode'
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 const SAMPLE_MEALS = [
-  { type: 'Breakfast', name: 'Tapsilog', price: 85, calories: 450 },
-  { type: 'Lunch', name: 'Tinola', price: 120, calories: 320 },
-  { type: 'Dinner', name: 'Sinigang na Baboy', price: 150, calories: 380 }
+  {
+    type: 'Breakfast',
+    name: 'Tapsilog',
+    price: 85,
+    calories: 450,
+    protein: 28,
+    fat: 16,
+    carbs: 48,
+    components: 'Tapa - 150g, Rice - 250g, Egg - 1pc'
+  },
+  {
+    type: 'Lunch',
+    name: 'Tinola',
+    price: 120,
+    calories: 320,
+    protein: 32,
+    fat: 10,
+    carbs: 24,
+    components: 'Rice - 250g, Tinola - 250g'
+  },
+  {
+    type: 'Dinner',
+    name: 'Sinigang na Baboy',
+    price: 150,
+    calories: 380,
+    protein: 26,
+    fat: 14,
+    carbs: 35,
+    components: 'Rice - 250g, Sinigang - 350g'
+  }
 ]
 
 function App() {
@@ -27,8 +55,26 @@ function App() {
   const { currentStepId, currentStepIndex, currentStepConfig, CurrentStepComponent, lastInputStepId, handleNext, handleBack, resetToFirstStep } = useWizardNavigation()
   const { mealPlan, loading, error, generateMealPlan, resetMealPlan } = useMealGeneration()
   const { darkMode, handleToggleDarkMode } = useDarkMode()
+  const [editableMealPlan, setEditableMealPlan] = useState(null)
 
   const isPlanView = Boolean(mealPlan)
+
+  useEffect(() => {
+    if (mealPlan && !editableMealPlan) {
+      setEditableMealPlan(JSON.parse(JSON.stringify(mealPlan)))
+    }
+  }, [mealPlan])
+
+  const handleUpdateMeal = (dayIndex, mealIndex, updatedMeal) => {
+    setEditableMealPlan(prev => {
+      const newPlan = [...prev]
+      newPlan[dayIndex] = {
+        ...newPlan[dayIndex],
+        meals: newPlan[dayIndex].meals.map((meal, idx) => idx === mealIndex ? updatedMeal : meal)
+      }
+      return newPlan
+    })
+  }
 
   const handleNextWithGeneration = async () => {
     const movedToNextStep = handleNext()
@@ -39,6 +85,7 @@ function App() {
 
   const handleStartOver = () => {
     resetMealPlan()
+    setEditableMealPlan(null)
     resetToFirstStep()
   }
 
@@ -109,11 +156,13 @@ function App() {
 
             <div className="weekly-grid">
               {mealPlan ? (
-                mealPlan.map((dayPlan) => (
+                (editableMealPlan || mealPlan).map((dayPlan, dayIndex) => (
                   <DayCard
                     key={dayPlan.day || dayPlan.day}
                     day={dayPlan.day}
                     meals={dayPlan.meals}
+                    onUpdateMeal={(mealIndex, updatedMeal) => handleUpdateMeal(dayIndex, mealIndex, updatedMeal)}
+                    isEditable={true}
                   />
                 ))
               ) : (

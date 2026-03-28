@@ -25,6 +25,14 @@
   font-size: 1rem;
   text-align: center;
   transition: border-color 0.3s ease;
+  background: var(--bg);
+  color: var(--text);
+  caret-color: var(--text);
+}
+
+.goal-item input::placeholder {
+  color: var(--text-light);
+  opacity: 1;
 }
 
 .goal-item input:focus {

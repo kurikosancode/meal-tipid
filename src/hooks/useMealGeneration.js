@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
 const SAMPLE_MEALS = [
-  { type: 'Breakfast', name: 'Tapsilog', price: 85, calories: 450 },
-  { type: 'Lunch', name: 'Tinola', price: 120, calories: 320 },
-  { type: 'Dinner', name: 'Sinigang na Baboy', price: 150, calories: 380 }
+  { type: 'Breakfast', name: 'Tapsilog', price: 85, calories: 450, protein: 28, fat: 16, carbs: 48, components: 'Tapa - 150g, Rice - 250g, Egg - 2pc' },
+  { type: 'Lunch', name: 'Tinola', price: 120, calories: 320, protein: 32, fat: 10, carbs: 24, components: 'Rice - 250g, Tinola - 250g' },
+  { type: 'Dinner', name: 'Sinigang na Baboy', price: 150, calories: 380, protein: 26, fat: 14, carbs: 35, components: 'Rice - 250g, Sinigang - 350g' }
 ]
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
