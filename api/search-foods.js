@@ -1,21 +1,6 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 
-const DEFAULT_CUSTOM_FOODS = [
-  'Chicken Adobo',
-  'Sinigang na Baboy',
-  'Tinola',
-  'Tapsilog',
-  'Pancit Canton',
-  'Ginisang Monggo',
-  'Bangus Sisig',
-  'Laing',
-  'Tokwa at Baboy',
-  'Lumpiang Shanghai',
-  'Chicken Afritada',
-  'Pinakbet'
-]
-
 async function loadCustomFoods() {
   try {
     const filePath = path.join(process.cwd(), 'src', 'config', 'customFoods.json')
@@ -24,7 +9,7 @@ async function loadCustomFoods() {
     return Array.isArray(parsed) ? parsed.filter((item) => typeof item === 'string') : DEFAULT_CUSTOM_FOODS
   } catch (error) {
     console.error('customFoods.json load error:', error)
-    return DEFAULT_CUSTOM_FOODS
+    return []
   }
 }
 

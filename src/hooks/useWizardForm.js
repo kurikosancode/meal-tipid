@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const DEFAULT_BUDGET = 5000
+const DEFAULT_BUDGET = 2000
 const DEFAULT_PREFERENCES = {
   vegan: false,
   vegetarian: false,

@@ -1,61 +1,24 @@
 # MealTipid
 
-A smart meal-planning web application designed to bridge the gap between nutritional goals and financial constraints. MealTipid generates fully customized weekly meal plans that adhere to a specific budget while hitting precise macronutrient targets.
+MealTipid is a meal-planning web app that generates weekly Filipino meal plans based on budget, dietary preferences, and macro goals.
 
-## Features
+## What It Does
 
-- **AI-Driven Meal Generation**: Creates 7-day plans based on weekly budget with even distribution
-- **Precision Nutrition**: Set specific targets for calories, protein, and macronutrients
-- **Filipino Food Focus**: Default meal suggestions featuring authentic Filipino dishes
-- **Budget Optimization**: Considers serving sizes and bulk-buy logic for families/groups
-- **Flexible Database**: Select from built-in foods with dynamic local pricing
-- **Export Options**: One-click export to PDF, PNG, or CSV
+- Generates a 7-day meal plan (Breakfast, Lunch, Dinner) with AI
+- Balances calories, protein, fat, and carbs per day
+- Supports dietary filters (vegan, vegetarian, halal, pescatarian)
+- Supports preferred-food suggestions/autocomplete
+- Lets you edit meals directly in the plan view
+- Exports meal plans to PDF, PNG, and CSV
 
 ## Tech Stack
 
-- **Frontend**: React 19 + Vite
-- **Language**: JavaScript (ES6+)
-- **Styling**: CSS with custom properties
-- **Build Tool**: Vite with React Compiler
-- **Linting**: ESLint with React rules
+- Frontend: React 19 + Vite
+- AI: Google Gemini (`gemini-2.5-flash`)
+- Search suggestions: TheMealDB + local custom foods
+- Export:
+	- PDF: `@react-pdf/renderer`
+	- PNG: `html2canvas` (template-based image export)
+	- CSV: in-app generator
 
-## Getting Started
-
-### Prerequisites
-- Node.js 22.12.0 or higher
-- npm or yarn
-
-### Installation
-
-```bash
-npm install
-```
-
-### Development
-
-```bash
-npm run dev
-```
-
-### Build
-
-```bash
-npm run build
-```
-
-### Preview
-
-```bash
-npm run preview
-```
-
-## Project Structure
-
-```
-src/
-├── components/
-│   └── DayCard.jsx + DayCard.css  # Reusable day card component
-├── App.jsx                       # Main application component
-├── App.css                       # Main application styles
-└── index.css                     # Global styles and variables
-```
+# Vibe Coded With Github Copilot
