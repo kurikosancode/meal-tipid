@@ -21,4 +21,6 @@ MealTipid is a meal-planning web app that generates weekly Filipino meal plans b
 	- PNG: `html2canvas` (template-based image export)
 	- CSV: in-app generator
 
-# Vibe Coded With Github Copilot
+<p align="center"> <img src="docs/images/preview.png" alt="MealTipid Preview" width="900" /> </p>
+
+### Vibe Coded With Github Copilot
