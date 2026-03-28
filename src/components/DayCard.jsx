@@ -14,7 +14,7 @@ function DayCard({ day, meals }) {
                         <div key={index} className={`meal ${meal.type.toLowerCase()}`}>
                             <h4>{meal.type}</h4>
                             <p>{meal.name}</p>
-                            {meal.components && <div className="components">{meal.components.split('\n').map((ing, i) => <div key={i}>{ing}</div>)}</div>}
+                            {meal.components && <div className="components">{meal.components.split(',').map((ing, i) => <div key={i}>{ing.trim()}</div>)}</div>}
                             <small>₱{meal.price} • {meal.calories} cal</small>
                         </div>
                     ))}

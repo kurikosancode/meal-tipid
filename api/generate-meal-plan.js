@@ -47,7 +47,7 @@ export default async function handler(req, res) {
     - If preference includes pescatarian: fish/seafood allowed, no other meat.
     - In the components, only state the main components of the meal. For example, if the meal is "Tapsilog", the ingredient should be "Tapa, Rice, Egg". Do not include minor ingredients like "oil" or "salt".
     - If it's just ulam with rice, only state that, don't state the ingredients of the ulam.
-    - Also state the serving size of the components. For example, "Tapa - 150g".
+    - Also state the serving size of the components and separate them with comma. For example, "Tapa - 150g, Rice - 250g, Egg - 1pc".
     - With the name of the meal, make it short and concise. For example, instead of "Tapsilog with Egg and Rice", just state "Tapsilog".
 
     Schema:
@@ -71,9 +71,9 @@ export default async function handler(req, res) {
     Example Output:
     [
               { day: 'Monday', meals: [
-                { type: 'Breakfast', name: 'Tapsilog', price: 85, calories: 450, ingredients: 'Tapa - 150g\nRice - 250g\nEgg - 1pc' },
-                { type: 'Lunch', name: 'Tinola', price: 120, calories: 320, ingredients: 'Rice - 250g\nTinola - 250g' },
-                { type: 'Dinner', name: 'Sinigang na Baboy', price: 150, calories: 380, ingredients: 'Rice - 250g\nSinigang - 350g' }
+                { type: 'Breakfast', name: 'Tapsilog', price: 85, calories: 450, ingredients: 'Tapa - 150g, Rice - 250g, Egg - 1pc' },
+                { type: 'Lunch', name: 'Tinola', price: 120, calories: 320, ingredients: 'Rice - 250g, Tinola - 250g' },
+                { type: 'Dinner', name: 'Sinigang na Baboy', price: 150, calories: 380, ingredients: 'Rice - 250g, Sinigang - 350g' }
   ]}]
     `;
 
