@@ -1,11 +1,20 @@
 import './App.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import html2canvas from 'html2canvas'
 import DayCard from './components/DayCard'
 import { WIZARD_STEPS } from './config/wizardSteps'
 import { useWizardForm } from './hooks/useWizardForm'
 import { useWizardNavigation } from './hooks/useWizardNavigation'
 import { useMealGeneration } from './hooks/useMealGeneration'
 import { useDarkMode } from './hooks/useDarkMode'
+import { generateMealPlanPdfBlob } from './utils/mealPlanPdfTemplate'
+import MealPlanExportImageTemplate from './components/MealPlanExportImageTemplate'
+
+const EXPORT_FORMATS = {
+  pdf: 'PDF',
+  png: 'PNG',
+  csv: 'CSV'
+}
 
 function App() {
   const {
@@ -22,6 +31,12 @@ function App() {
   const { mealPlan, loading, error, generateMealPlan, resetMealPlan } = useMealGeneration()
   const { darkMode, handleToggleDarkMode } = useDarkMode()
   const [editableMealPlan, setEditableMealPlan] = useState(null)
+  const [showExportMenu, setShowExportMenu] = useState(false)
+  const [isExporting, setIsExporting] = useState(false)
+  const [pngExportData, setPngExportData] = useState(null)
+  const mealPlanRef = useRef(null)
+  const exportMenuRef = useRef(null)
+  const pngExportRef = useRef(null)
 
   const isPlanView = Boolean(mealPlan)
 
@@ -30,6 +45,21 @@ function App() {
       setEditableMealPlan(JSON.parse(JSON.stringify(mealPlan)))
     }
   }, [mealPlan])
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!showExportMenu) {
+        return
+      }
+
+      if (exportMenuRef.current && !exportMenuRef.current.contains(event.target)) {
+        setShowExportMenu(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleOutsideClick)
+    return () => document.removeEventListener('mousedown', handleOutsideClick)
+  }, [showExportMenu])
 
   const handleUpdateMeal = (dayIndex, mealIndex, updatedMeal) => {
     setEditableMealPlan(prev => {
@@ -53,6 +83,155 @@ function App() {
     resetMealPlan()
     setEditableMealPlan(null)
     resetToFirstStep()
+  }
+
+  const downloadBlob = (blob, fileName) => {
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = fileName
+    link.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const getExportDateSuffix = () => new Date().toISOString().split('T')[0]
+
+  const normalizeCsvValue = (value) => {
+    const raw = String(value ?? '')
+    const escaped = raw.replace(/"/g, '""')
+    return `"${escaped}"`
+  }
+
+  const exportAsCsv = () => {
+    const sourcePlan = editableMealPlan || mealPlan || []
+    const rows = [
+      ['Day', 'Meal Type', 'Meal Name', 'Price', 'Calories', 'Protein', 'Fat', 'Carbs', 'Components']
+    ]
+
+    sourcePlan.forEach((dayPlan) => {
+      dayPlan.meals.forEach((meal) => {
+        rows.push([
+          dayPlan.day,
+          meal.type,
+          meal.name,
+          meal.price,
+          meal.calories,
+          meal.protein,
+          meal.fat,
+          meal.carbs,
+          meal.components
+        ])
+      })
+    })
+
+    const csvContent = rows
+      .map((row) => row.map((cell) => normalizeCsvValue(cell)).join(','))
+      .join('\n')
+
+    const csvBlob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    downloadBlob(csvBlob, `meal-plan-${getExportDateSuffix()}.csv`)
+  }
+
+  const captureElementCanvas = async (element) => {
+    if (!element) {
+      throw new Error('Export template is not ready.')
+    }
+
+    const styles = window.getComputedStyle(element)
+    return html2canvas(element, {
+      scale: 2,
+      backgroundColor: styles.backgroundColor || '#ffffff',
+      useCORS: true,
+      windowWidth: element.scrollWidth,
+      windowHeight: element.scrollHeight
+    })
+  }
+
+  const waitForTemplatePaint = () => new Promise((resolve) => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(resolve)
+    })
+  })
+
+  const exportAsPng = async () => {
+    const sourcePlan = editableMealPlan || mealPlan || []
+    if (!sourcePlan.length) {
+      throw new Error('No meal plan available to export.')
+    }
+
+    const generatedAt = new Date().toLocaleString('en-PH', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+
+    setPngExportData({
+      plan: sourcePlan,
+      budget,
+      preferences,
+      goals,
+      generatedAt
+    })
+
+    try {
+      await waitForTemplatePaint()
+      const canvas = await captureElementCanvas(pngExportRef.current)
+      const pngBlob = await new Promise((resolve, reject) => {
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            reject(new Error('Failed to generate PNG file.'))
+            return
+          }
+          resolve(blob)
+        }, 'image/png')
+      })
+
+      downloadBlob(pngBlob, `meal-plan-${getExportDateSuffix()}.png`)
+    } finally {
+      setPngExportData(null)
+    }
+  }
+
+  const exportAsPdf = async () => {
+    const sourcePlan = editableMealPlan || mealPlan || []
+    if (!sourcePlan.length) {
+      throw new Error('No meal plan available to export.')
+    }
+
+    const pdfBlob = await generateMealPlanPdfBlob({
+      plan: sourcePlan,
+      budget,
+      preferences,
+      goals
+    })
+
+    downloadBlob(pdfBlob, `meal-plan-${getExportDateSuffix()}.pdf`)
+  }
+
+  const handleExport = async (format) => {
+    try {
+      setIsExporting(true)
+      setShowExportMenu(false)
+
+      if (format === 'csv') {
+        exportAsCsv()
+        return
+      }
+
+      if (format === 'png') {
+        await exportAsPng()
+        return
+      }
+
+      await exportAsPdf()
+    } catch (exportError) {
+      console.error('Export failed:', exportError)
+      window.alert(`Could not export meal plan: ${exportError.message}`)
+    } finally {
+      setIsExporting(false)
+    }
   }
 
   return (
@@ -105,7 +284,7 @@ function App() {
           </div>
         ) : (
 
-          <div className="meal-plan">
+          <div className="meal-plan" ref={mealPlanRef}>
             <div className="plan-header">
               <h2>Your Weekly Meal Plan</h2>
               <div className="plan-summary">
@@ -150,19 +329,48 @@ function App() {
                 ))
               )}
             </div>
-            {error && <div style={{ color: '#e53e3e', textAlign: 'center', margin: '1rem 0' }}>{error}</div>}
+            {error && <div className="plan-error" style={{ color: '#e53e3e', textAlign: 'center', margin: '1rem 0' }}>{error}</div>}
 
             <div className="plan-actions">
               <button className="btn-secondary" onClick={handleStartOver}>
                 Start Over
               </button>
-              <button className="btn-primary">
-                Export Plan
-              </button>
+              <div className="export-controls" ref={exportMenuRef}>
+                <button className="btn-primary" onClick={() => setShowExportMenu((prev) => !prev)} disabled={isExporting}>
+                  {isExporting ? 'Exporting...' : 'Export Plan'}
+                </button>
+                {showExportMenu && !isExporting && (
+                  <div className="export-menu" role="menu" aria-label="Export options">
+                    {Object.entries(EXPORT_FORMATS).map(([value, label]) => (
+                      <button
+                        key={value}
+                        type="button"
+                        className="export-menu-item"
+                        onClick={() => handleExport(value)}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}
       </main>
+
+      {pngExportData && (
+        <div className="export-staging" aria-hidden="true">
+          <MealPlanExportImageTemplate
+            ref={pngExportRef}
+            plan={pngExportData.plan}
+            budget={pngExportData.budget}
+            preferences={pngExportData.preferences}
+            goals={pngExportData.goals}
+            generatedAt={pngExportData.generatedAt}
+          />
+        </div>
+      )}
     </div>
   )
 }

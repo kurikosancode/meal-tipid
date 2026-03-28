@@ -119,7 +119,7 @@ function DayCard({ day, meals, onUpdateMeal, isEditable = false }) {
                                     </div>
                                     {meal.components && <div className="components">{meal.components.split(',').map((ing, i) => <div key={i}>{ing.trim()}</div>)}</div>}
                                     <small className="meal-macros">
-                                        {meal.calories ?? '-'} cal • {meal.protein ?? '-'}g protein • {meal.fat ?? '-'}g fat • {meal.carbs ?? '-'}g carbs
+                                        {meal.calories ?? '-'} Cal • {meal.protein ?? '-'}g Protein • {meal.fat ?? '-'}g Fat • {meal.carbs ?? '-'}g Carbs
                                     </small>
                                 </>
                             )}

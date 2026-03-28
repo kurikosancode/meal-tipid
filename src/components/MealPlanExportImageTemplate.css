@@ -1,0 +1,123 @@
+.png-export-root {
+  width: 794px;
+  background: #f8fafc;
+  padding: 24px;
+  color: #2d3748;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.png-export-hero {
+  background: #22c55e;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.png-export-hero h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.png-export-hero p {
+  margin: 4px 0 0;
+  color: #dcfce7;
+  font-size: 14px;
+}
+
+.png-export-summary-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #ffffff;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+
+.png-export-summary-card p {
+  margin: 4px 0;
+  font-size: 13px;
+}
+
+.png-export-day-card {
+  margin-top: 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px;
+  background: #ffffff;
+}
+
+.png-export-day-card h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.png-export-day-accent {
+  height: 3px;
+  background: #22c55e;
+  border-radius: 6px;
+  margin: 6px 0 10px;
+}
+
+.png-export-meals-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.png-export-meal-card {
+  padding: 8px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.png-export-meal-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.png-export-meal-type {
+  font-size: 11px;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.png-export-meal-name {
+  margin-top: 2px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.png-export-meal-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: #22c55e;
+  white-space: nowrap;
+}
+
+.png-export-components {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  font-size: 12px;
+  color: #718096;
+  line-height: 1.35;
+}
+
+.png-export-macros {
+  font-size: 12px;
+  color: #718096;
+}
+
+.png-export-day-total {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #f1f5f9;
+  font-size: 13px;
+  font-weight: 700;
+}

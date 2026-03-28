@@ -12,7 +12,7 @@ const DEFAULT_GOALS = {
   calories: 2000,
   protein: 100,
   carbs: 250,
-  fat: 67
+  fat: 65
 }
 
 export function useWizardForm() {
