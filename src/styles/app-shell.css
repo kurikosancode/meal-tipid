@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@700;800&display=swap');
+
 .app {
   min-height: 100vh;
   background: var(--bg-secondary);
@@ -27,6 +29,7 @@
   margin: 0;
   font-size: 3rem;
   font-weight: 800;
+  font-family: 'Geist', 'Segoe UI', Roboto, sans-serif;
   color: white;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   letter-spacing: -0.02em;
@@ -35,7 +38,7 @@
 }
 
 .header p {
-  margin: 0.75rem 0 0;
+  margin: 0;
   color: rgba(255, 255, 255, 0.9);
   font-size: 1.2rem;
   font-weight: 400;

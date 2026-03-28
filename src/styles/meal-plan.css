@@ -34,11 +34,23 @@
 
 .plan-summary {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.plan-summary-row {
+  display: flex;
   justify-content: center;
-  gap: 3rem;
+  gap: 2.5rem;
   font-size: 1rem;
   color: var(--text-secondary);
   font-weight: 500;
+}
+
+.plan-summary-macros {
+  gap: 1.5rem;
+  font-size: 0.95rem;
 }
 
 .weekly-grid {
@@ -62,8 +74,12 @@
   }
 
   .plan-summary {
-    flex-direction: column;
     gap: 0.5rem;
+  }
+
+  .plan-summary-row {
+    flex-direction: column;
+    gap: 0.35rem;
   }
 
   .plan-actions {

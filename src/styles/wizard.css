@@ -82,6 +82,10 @@
   opacity: 1;
 }
 
+[data-theme="dark"] .setup-wizard input[type="number"] {
+  color-scheme: dark;
+}
+
 .step-content input:focus {
   outline: none;
   border-color: var(--primary);

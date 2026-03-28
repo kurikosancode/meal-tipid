@@ -7,40 +7,6 @@ import { useWizardNavigation } from './hooks/useWizardNavigation'
 import { useMealGeneration } from './hooks/useMealGeneration'
 import { useDarkMode } from './hooks/useDarkMode'
 
-const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-const SAMPLE_MEALS = [
-  {
-    type: 'Breakfast',
-    name: 'Tapsilog',
-    price: 85,
-    calories: 450,
-    protein: 28,
-    fat: 16,
-    carbs: 48,
-    components: 'Tapa - 150g, Rice - 250g, Egg - 1pc'
-  },
-  {
-    type: 'Lunch',
-    name: 'Tinola',
-    price: 120,
-    calories: 320,
-    protein: 32,
-    fat: 10,
-    carbs: 24,
-    components: 'Rice - 250g, Tinola - 250g'
-  },
-  {
-    type: 'Dinner',
-    name: 'Sinigang na Baboy',
-    price: 150,
-    calories: 380,
-    protein: 26,
-    fat: 14,
-    carbs: 35,
-    components: 'Rice - 250g, Sinigang - 350g'
-  }
-]
-
 function App() {
   const {
     budget,
@@ -143,14 +109,21 @@ function App() {
             <div className="plan-header">
               <h2>Your Weekly Meal Plan</h2>
               <div className="plan-summary">
-                <span>Budget: ₱{budget}</span>
-                <span>
-                  Preferences: {Object.entries(preferences)
-                    .filter(([key, value]) => value && key !== 'noRestrictions')
-                    .map(([key]) => key.charAt(0).toUpperCase() + key.slice(1))
-                    .join(', ') || 'None'}
-                </span>
-                <span>Daily Goal: {goals.calories} cal</span>
+                <div className="plan-summary-row">
+                  <span>Budget: ₱{budget}</span>
+                  <span>
+                    Preferences: {Object.entries(preferences)
+                      .filter(([key, value]) => value && key !== 'noRestrictions')
+                      .map(([key]) => key.charAt(0).toUpperCase() + key.slice(1))
+                      .join(', ') || 'None'}
+                  </span>
+                </div>
+                <div className="plan-summary-row plan-summary-macros">
+                  <span>Calories: {goals.calories}</span>
+                  <span>Protein: {goals.protein}g</span>
+                  <span>Fat: {goals.fat}g</span>
+                  <span>Carbs: {goals.carbs}g</span>
+                </div>
               </div>
             </div>
 

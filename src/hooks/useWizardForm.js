@@ -10,7 +10,7 @@ const DEFAULT_PREFERENCES = {
 }
 const DEFAULT_GOALS = {
   calories: 2000,
-  protein: 150,
+  protein: 100,
   carbs: 250,
   fat: 67
 }
